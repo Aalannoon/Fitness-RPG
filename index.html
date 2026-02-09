@@ -1,1 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fitness RPG</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+<h1>🏋️ Fitness RPG</h1>
+
+<div id="character">
+  <p>Level: <span id="level">1</span></p>
+  <p>XP: <span id="xp">0</span> / <span id="xpNeeded">100</span></p>
+  <p>STR: <span id="str">1</span></p>
+  <p>END: <span id="end">1</span></p>
+</div>
+
+<button onclick="logWorkout('strength')">Lift Weights</button>
+<button onclick="logWorkout('cardio')">Do Cardio</button>
+
+<script src="game.js"></script>
+</body>
+</html>
