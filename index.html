@@ -13,7 +13,6 @@
 <!-- CHARACTER PANEL -->
 <div class="panel stats">
   <div class="panel-title">Character</div>
-
   <div class="avatar" id="avatar">🧍</div>
 
   <p>Level: <span id="level">1</span></p>
@@ -25,28 +24,35 @@
   <p>XP: <span id="xp">0</span> / <span id="xpNeeded">100</span></p>
   <p>STR: <span id="str">1</span></p>
   <p>END: <span id="end">1</span></p>
+  <p>Weight: <span id="weight">—</span> lbs</p>
 </div>
 
-<!-- ACTION PANEL -->
+<!-- WEIGHT TRACKING -->
+<div class="panel">
+  <div class="panel-title">Log Weight</div>
+  <input id="weightInput" type="number" placeholder="lbs">
+  <button onclick="logWeight()">Log Weight</button>
+</div>
+
+<!-- ACTIONS -->
 <div class="panel">
   <div class="panel-title">Actions</div>
   <button onclick="logWorkout('strength')">🏋️ Lift Weights</button>
   <button onclick="logWorkout('cardio')">🏃 Cardio</button>
 </div>
 
-<!-- GEAR PANEL -->
-<div class="panel gear">
-  <div class="panel-title">Equipment</div>
-  <p>👟 Shoes: <span id="shoes">None</span></p>
-  <p>🦾 Belt: <span id="belt">None</span></p>
-  <button onclick="equipShoes()">Equip Running Shoes</button>
-  <button onclick="equipBelt()">Equip Lifting Belt</button>
+<!-- SKILL TREE -->
+<div class="panel skills">
+  <div class="panel-title">Skills</div>
+  <p>Skill Points: <span id="skillPoints">0</span></p>
+  <button class="skill-btn" onclick="unlockSTR()">💥 STR Mastery (+2 STR)</button>
+  <button class="skill-btn" onclick="unlockEND()">💨 END Mastery (+2 END)</button>
 </div>
 
-<!-- ENEMY PANEL -->
+<!-- ENEMY -->
 <div class="panel">
   <div class="panel-title">Enemy</div>
-  <p id="enemyName">🧟 Sloth</p>
+  <p>🧟 Sloth</p>
   <p>HP: <span id="enemyHp">30</span></p>
   <button onclick="attackEnemy()">⚔️ Attack</button>
 </div>
