@@ -14,6 +14,11 @@
 <div class="panel stats">
   <div class="panel-title">Character</div>
   <p>Level: <span id="level">1</span></p>
+
+  <div class="xp-bar">
+    <div class="xp-fill" id="xpFill"></div>
+  </div>
+
   <p>XP: <span id="xp">0</span> / <span id="xpNeeded">100</span></p>
   <p>STR: <span id="str">1</span></p>
   <p>END: <span id="end">1</span></p>
@@ -27,12 +32,12 @@
   <button onclick="logWorkout('cardio')">🏃 Cardio</button>
 </div>
 
-<!-- ENEMY PANEL (visual only for now) -->
+<!-- ENEMY PANEL -->
 <div class="panel">
   <div class="panel-title">Enemy</div>
-  <p>🧟 Sloth</p>
-  <p>HP: ???</p>
-  <p>Status: Locked</p>
+  <p id="enemyName">🧟 Sloth</p>
+  <p>HP: <span id="enemyHp">30</span></p>
+  <button onclick="attackEnemy()">⚔️ Attack</button>
 </div>
 
 <script src="game.js"></script>
