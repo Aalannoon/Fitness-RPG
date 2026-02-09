@@ -17,7 +17,7 @@ h1 {
   border-radius: 14px;
   padding: 16px;
   margin: 15px auto;
-  max-width: 360px;
+  max-width: 380px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
 }
 
@@ -30,13 +30,11 @@ h1 {
   color: #00e676;
 }
 
-/* AVATAR */
 .avatar {
   font-size: 72px;
   margin-bottom: 10px;
 }
 
-/* XP BAR */
 .xp-bar {
   width: 100%;
   background: #333;
@@ -49,16 +47,21 @@ h1 {
   height: 14px;
   width: 0%;
   background: linear-gradient(90deg, #00e676, #00c853);
-  transition: width 0.3s ease;
 }
 
-.stats p {
+.stats p,
+.gear p,
+.skills p {
   margin: 6px 0;
-  font-size: 17px;
+  font-size: 16px;
 }
 
-.gear p {
-  font-size: 16px;
+input {
+  padding: 8px;
+  width: 120px;
+  border-radius: 6px;
+  border: none;
+  margin-top: 6px;
 }
 
 button {
@@ -66,8 +69,8 @@ button {
   width: 90%;
   max-width: 300px;
   margin: 10px auto;
-  padding: 14px;
-  font-size: 16px;
+  padding: 12px;
+  font-size: 15px;
   border-radius: 10px;
   border: none;
   background: linear-gradient(180deg, #00e676, #00c853);
@@ -76,6 +79,6 @@ button {
   cursor: pointer;
 }
 
-button:hover {
-  filter: brightness(1.1);
+.skill-btn {
+  background: linear-gradient(180deg, #ffd54f, #ffb300);
 }
