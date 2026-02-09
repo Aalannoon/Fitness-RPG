@@ -30,9 +30,10 @@ h1 {
   color: #00e676;
 }
 
-.stats p {
-  margin: 6px 0;
-  font-size: 17px;
+/* AVATAR */
+.avatar {
+  font-size: 72px;
+  margin-bottom: 10px;
 }
 
 /* XP BAR */
@@ -49,6 +50,15 @@ h1 {
   width: 0%;
   background: linear-gradient(90deg, #00e676, #00c853);
   transition: width 0.3s ease;
+}
+
+.stats p {
+  margin: 6px 0;
+  font-size: 17px;
+}
+
+.gear p {
+  font-size: 16px;
 }
 
 button {
@@ -68,10 +78,4 @@ button {
 
 button:hover {
   filter: brightness(1.1);
-}
-
-button:disabled {
-  background: #555;
-  color: #999;
-  cursor: not-allowed;
 }
