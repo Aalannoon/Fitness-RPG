@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(180deg, #0f2027, #203a43, #2c5364);
+  background: radial-gradient(circle at top, #1b2735, #090a0f);
   color: #ffffff;
   text-align: center;
   padding: 20px;
@@ -8,19 +8,31 @@ body {
 }
 
 h1 {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
-.stats {
-  background: rgba(0, 0, 0, 0.35);
+.panel {
+  background: rgba(0, 0, 0, 0.45);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
   padding: 16px;
-  border-radius: 12px;
-  margin-bottom: 20px;
+  margin: 15px auto;
+  max-width: 360px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+}
+
+.panel-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #00e676;
 }
 
 .stats p {
   margin: 6px 0;
-  font-size: 18px;
+  font-size: 17px;
 }
 
 button {
@@ -32,17 +44,18 @@ button {
   font-size: 16px;
   border-radius: 10px;
   border: none;
-  background: #00c853;
+  background: linear-gradient(180deg, #00e676, #00c853);
   color: #000;
   font-weight: bold;
   cursor: pointer;
 }
 
 button:hover {
-  opacity: 0.9;
+  filter: brightness(1.1);
 }
 
 button:disabled {
   background: #555;
+  color: #999;
   cursor: not-allowed;
 }
