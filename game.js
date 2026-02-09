@@ -4,134 +4,113 @@ let player = {
   xpNeeded: 100,
   str: 1,
   end: 1,
-  weight: null,
-  skillPoints: 0,
-  skills: {
-    strMastery: false,
-    endMastery: false
-  }
+  streak: 0,
+  lastActive: null
 };
 
-let enemy = {
-  maxHp: 30,
-  hp: 30
+let zones = {
+  gym: { name: "Gym Bro", hp: 25 },
+  park: { name: "Lazy Jogger", hp: 35 },
+  mountain: { name: "Mountain Beast", hp: 50 }
 };
 
-/* ---------- SAVE / LOAD ---------- */
+let enemy = { name: "", hp: 0 };
+
+let quest = {
+  text: "Do any workout today",
+  completed: false
+};
+
+/* SAVE / LOAD */
 function saveGame() {
-  localStorage.setItem("fitnessRPG", JSON.stringify({ player, enemy }));
+  localStorage.setItem("fitnessRPG", JSON.stringify({ player, quest }));
 }
 
 function loadGame() {
   const data = localStorage.getItem("fitnessRPG");
   if (data) {
-    const parsed = JSON.parse(data);
-    player = parsed.player;
-    enemy = parsed.enemy;
+    const d = JSON.parse(data);
+    player = d.player;
+    quest = d.quest;
   }
 }
 
-/* ---------- TOTAL STATS ---------- */
-function totalSTR() {
-  let bonus = player.skills.strMastery ? 2 : 0;
-  return player.str + bonus + weightBonus();
+/* DAILY STREAK */
+function checkStreak() {
+  const today = new Date().toDateString();
+  if (player.lastActive === today) return;
+
+  if (player.lastActive) {
+    const diff =
+      (new Date(today) - new Date(player.lastActive)) / 86400000;
+    player.streak = diff === 1 ? player.streak + 1 : 1;
+  } else {
+    player.streak = 1;
+  }
+
+  player.lastActive = today;
+  quest.completed = false;
 }
 
-function totalEND() {
-  let bonus = player.skills.endMastery ? 2 : 0;
-  return player.end + bonus;
-}
-
-function weightBonus() {
-  if (!player.weight) return 0;
-  if (player.weight <= 250) return 2;
-  if (player.weight <= 270) return 1;
-  return 0;
-}
-
-/* ---------- WEIGHT ---------- */
-function logWeight() {
-  const value = document.getElementById("weightInput").value;
-  if (!value) return;
-
-  player.weight = parseInt(value);
-  saveGame();
-  updateUI();
-}
-
-/* ---------- WORKOUT ---------- */
-function logWorkout(type) {
-  if (type === "strength") player.str++;
-  if (type === "cardio") player.end++;
-
-  player.xp += 20;
+/* QUEST */
+function completeQuest() {
+  if (quest.completed) return;
+  player.xp += 40;
+  quest.completed = true;
   checkLevelUp();
   saveGame();
   updateUI();
 }
 
-/* ---------- SKILLS ---------- */
-function unlockSTR() {
-  if (player.skillPoints <= 0 || player.skills.strMastery) return;
-  player.skills.strMastery = true;
-  player.skillPoints--;
-  saveGame();
+/* ZONES */
+function enterZone(zoneKey) {
+  enemy.name = zones[zoneKey].name;
+  enemy.hp = zones[zoneKey].hp;
   updateUI();
 }
 
-function unlockEND() {
-  if (player.skillPoints <= 0 || player.skills.endMastery) return;
-  player.skills.endMastery = true;
-  player.skillPoints--;
-  saveGame();
-  updateUI();
-}
-
-/* ---------- COMBAT ---------- */
+/* COMBAT */
 function attackEnemy() {
-  enemy.hp -= totalSTR();
+  if (!enemy.hp) return;
+  enemy.hp -= player.str;
 
   if (enemy.hp <= 0) {
-    enemy.hp = enemy.maxHp;
     player.xp += 30;
+    enemy.hp = 0;
     checkLevelUp();
   }
-
   saveGame();
   updateUI();
 }
 
-/* ---------- LEVEL UP ---------- */
+/* LEVEL */
 function checkLevelUp() {
   if (player.xp >= player.xpNeeded) {
     player.level++;
     player.xp = 0;
     player.xpNeeded += 50;
-    player.skillPoints++;
-    alert("🎉 LEVEL UP! +1 Skill Point");
   }
 }
 
-/* ---------- AVATAR ---------- */
+/* AVATAR */
 function updateAvatar() {
-  const avatar = document.getElementById("avatar");
-  if (player.level < 5) avatar.innerText = "🧍";
-  else if (player.level < 10) avatar.innerText = "🏃";
-  else if (player.level < 15) avatar.innerText = "💪";
-  else avatar.innerText = "🦸";
+  const a = document.getElementById("avatar");
+  a.innerText =
+    player.level < 5 ? "🧍" :
+    player.level < 10 ? "🏃" :
+    player.level < 15 ? "💪" : "🦸";
 }
 
-/* ---------- UI ---------- */
+/* UI */
 function updateUI() {
   document.getElementById("level").innerText = player.level;
-  document.getElementById("xp").innerText = player.xp;
-  document.getElementById("xpNeeded").innerText = player.xpNeeded;
-  document.getElementById("str").innerText = totalSTR();
-  document.getElementById("end").innerText = totalEND();
-  document.getElementById("weight").innerText =
-    player.weight ? player.weight : "—";
-  document.getElementById("skillPoints").innerText = player.skillPoints;
+  document.getElementById("str").innerText = player.str;
+  document.getElementById("end").innerText = player.end;
+  document.getElementById("streak").innerText = player.streak;
+  document.getElementById("enemyName").innerText = enemy.name;
   document.getElementById("enemyHp").innerText = enemy.hp;
+  document.getElementById("questText").innerText =
+    quest.completed ? "Quest Complete ✅" : quest.text;
 
   document.getElementById("xpFill").style.width =
     (player.xp / player.xpNeeded) * 100 + "%";
@@ -139,6 +118,7 @@ function updateUI() {
   updateAvatar();
 }
 
-/* ---------- INIT ---------- */
+/* INIT */
 loadGame();
+checkStreak();
 updateUI();
