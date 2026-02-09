@@ -10,7 +10,9 @@
 
 <h1>🏋️ Fitness RPG</h1>
 
-<div class="stats">
+<!-- CHARACTER PANEL -->
+<div class="panel stats">
+  <div class="panel-title">Character</div>
   <p>Level: <span id="level">1</span></p>
   <p>XP: <span id="xp">0</span> / <span id="xpNeeded">100</span></p>
   <p>STR: <span id="str">1</span></p>
@@ -18,8 +20,20 @@
   <p>Last Workout: <span id="lastWorkout">None</span></p>
 </div>
 
-<button onclick="logWorkout('strength')">🏋️ Lift Weights</button>
-<button onclick="logWorkout('cardio')">🏃 Cardio</button>
+<!-- ACTION PANEL -->
+<div class="panel">
+  <div class="panel-title">Actions</div>
+  <button onclick="logWorkout('strength')">🏋️ Lift Weights</button>
+  <button onclick="logWorkout('cardio')">🏃 Cardio</button>
+</div>
+
+<!-- ENEMY PANEL (visual only for now) -->
+<div class="panel">
+  <div class="panel-title">Enemy</div>
+  <p>🧟 Sloth</p>
+  <p>HP: ???</p>
+  <p>Status: Locked</p>
+</div>
 
 <script src="game.js"></script>
 </body>
