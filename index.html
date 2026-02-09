@@ -21,15 +21,8 @@
   </div>
 
   <p>❤️ HP: <span id="playerHp">100</span></p>
+  <p>🔋 Stamina: <span id="stamina">100</span></p>
   <p>STR: <span id="str">1</span> | END: <span id="end">1</span></p>
-  <p>🔥 Streak: <span id="streak">0</span> days</p>
-</div>
-
-<div class="panel">
-  <div class="panel-title">Zones</div>
-  <button onclick="enterZone('gym')">🏋️ Gym</button>
-  <button onclick="enterZone('park')">🌳 Park</button>
-  <button onclick="enterZone('mountain')">⛰ Mountain</button>
 </div>
 
 <div class="panel">
@@ -37,7 +30,13 @@
   <div class="avatar" id="enemyAvatar">❓</div>
   <p id="enemyName">—</p>
   <p>❤️ HP: <span id="enemyHp">0</span></p>
-  <button onclick="attackEnemy()">⚔️ Attack</button>
+</div>
+
+<div class="panel">
+  <div class="panel-title">Combat</div>
+  <button onclick="playerAction('attack')">⚔️ Attack</button>
+  <button onclick="playerAction('defend')">🛡 Defend</button>
+  <button onclick="playerAction('power')">🔥 Power Move</button>
 </div>
 
 <script src="game.js"></script>
