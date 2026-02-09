@@ -20,14 +20,9 @@
     <div class="xp-fill" id="xpFill"></div>
   </div>
 
+  <p>❤️ HP: <span id="playerHp">100</span></p>
   <p>STR: <span id="str">1</span> | END: <span id="end">1</span></p>
   <p>🔥 Streak: <span id="streak">0</span> days</p>
-</div>
-
-<div class="panel">
-  <div class="panel-title">Daily Quest</div>
-  <p id="questText">—</p>
-  <button onclick="completeQuest()">Complete Quest</button>
 </div>
 
 <div class="panel">
@@ -39,8 +34,9 @@
 
 <div class="panel">
   <div class="panel-title">Enemy</div>
+  <div class="avatar" id="enemyAvatar">❓</div>
   <p id="enemyName">—</p>
-  <p>HP: <span id="enemyHp">0</span></p>
+  <p>❤️ HP: <span id="enemyHp">0</span></p>
   <button onclick="attackEnemy()">⚔️ Attack</button>
 </div>
 
