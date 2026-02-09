@@ -35,6 +35,22 @@ h1 {
   font-size: 17px;
 }
 
+/* XP BAR */
+.xp-bar {
+  width: 100%;
+  background: #333;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 8px 0 12px;
+}
+
+.xp-fill {
+  height: 14px;
+  width: 0%;
+  background: linear-gradient(90deg, #00e676, #00c853);
+  transition: width 0.3s ease;
+}
+
 button {
   display: block;
   width: 90%;
