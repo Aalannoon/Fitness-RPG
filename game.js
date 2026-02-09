@@ -1,160 +1,170 @@
 let player = {
-  build: "balanced",
-  level: 1,
-  xp: 0,
-  xpNeeded: 100,
-  str: 4,
-  end: 4,
   hp: 100,
   maxHp: 100,
-  stamina: 100,
-  maxStamina: 100
+  stamina: 3,
+  maxStamina: 3,
+  xp: 0,
+  xpNeeded: 100,
+  block: 0
 };
 
 let enemy = {
   name: "Training Dummy",
-  emoji: "🥊",
-  hp: 80,
-  maxHp: 80,
+  hp: 40,
   atk: 8
 };
 
-/* BUILDS */
-function setBuild(type) {
-  player.build = type;
-
-  if (type === "strength") {
-    player.str = 7;
-    player.end = 2;
-    player.maxStamina = 80;
+/* CARD DEFINITIONS */
+const cards = {
+  strike: {
+    name: "Bench Press",
+    cost: 1,
+    type: "attack",
+    text: "Deal 6 damage",
+    play: () => {
+      enemy.hp -= 6;
+    }
+  },
+  heavy: {
+    name: "Deadlift",
+    cost: 2,
+    type: "attack",
+    text: "Deal 10 damage",
+    play: () => {
+      enemy.hp -= 10;
+    }
+  },
+  block: {
+    name: "Plank Hold",
+    cost: 1,
+    type: "block",
+    text: "Gain 8 block",
+    play: () => {
+      player.block += 8;
+    }
+  },
+  breathe: {
+    name: "Controlled Breathing",
+    cost: 0,
+    type: "skill",
+    text: "Gain 1 stamina",
+    play: () => {
+      player.stamina = Math.min(player.stamina + 1, player.maxStamina);
+    }
   }
+};
 
-  if (type === "endurance") {
-    player.str = 3;
-    player.end = 7;
-    player.maxStamina = 130;
+/* STARTER DECK */
+let deck = ["strike", "strike", "block", "breathe", "heavy"];
+let drawPile = [];
+let hand = [];
+let discard = [];
+
+/* DECK HELPERS */
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+function drawCards(n) {
+  for (let i = 0; i < n; i++) {
+    if (drawPile.length === 0) {
+      drawPile = shuffle(discard);
+      discard = [];
+    }
+    if (drawPile.length > 0) {
+      hand.push(drawPile.pop());
+    }
   }
+}
 
-  if (type === "balanced") {
-    player.str = 4;
-    player.end = 4;
-    player.maxStamina = 100;
-  }
-
+/* COMBAT FLOW */
+function startCombat() {
+  drawPile = shuffle([...deck]);
+  hand = [];
+  discard = [];
   player.stamina = player.maxStamina;
+  drawCards(5);
   updateUI();
-  saveGame();
 }
 
-/* SAVE */
-function saveGame() {
-  localStorage.setItem("fitnessRPG", JSON.stringify({ player }));
-}
+function playCard(index) {
+  const cardKey = hand[index];
+  const card = cards[cardKey];
 
-function loadGame() {
-  const data = localStorage.getItem("fitnessRPG");
-  if (data) player = JSON.parse(data).player;
-}
+  if (player.stamina < card.cost) return;
 
-/* COMBAT */
-function playerAction(type) {
-  if (player.hp <= 0 || enemy.hp <= 0) return;
+  player.stamina -= card.cost;
+  card.play();
 
-  let damage = 0;
+  discard.push(hand.splice(index, 1)[0]);
 
-  if (type === "attack") {
-    damage = player.str;
-    player.stamina -= 10;
-    player.xp += 3;
-  }
-
-  if (type === "defend") {
-    player.stamina += 20 + player.end * 2;
-    if (player.stamina > player.maxStamina)
-      player.stamina = player.maxStamina;
-    enemyAttack(true);
-    updateUI();
+  if (enemy.hp <= 0) {
+    winCombat();
     return;
   }
 
-  if (type === "power") {
-    if (player.stamina < 30) return alert("Not enough stamina!");
-    damage = player.str * 3;
-    player.stamina -= 30;
-    player.xp += 10;
-  }
-
-  enemy.hp -= damage;
-  showHit(damage);
-  enemyAttack(false);
-  checkOutcome();
-  checkLevelUp();
-  saveGame();
   updateUI();
 }
 
-/* ENEMY */
-function enemyAttack(defended) {
-  let dmg = enemy.atk;
-  if (defended) dmg = Math.floor(dmg / 2);
+function endTurn() {
+  enemyAttack();
+  player.block = 0;
+  player.stamina = player.maxStamina;
+  discard.push(...hand);
+  hand = [];
+  drawCards(5);
+  updateUI();
+}
+
+function enemyAttack() {
+  let dmg = enemy.atk - player.block;
+  if (dmg < 0) dmg = 0;
   player.hp -= dmg;
-}
-
-/* FEEDBACK */
-function showHit(dmg) {
-  const panel = document.getElementById("enemyPanel");
-  const text = document.getElementById("damageText");
-  text.innerText = `-${dmg}`;
-  panel.classList.add("hit");
-
-  setTimeout(() => {
-    panel.classList.remove("hit");
-    text.innerText = "";
-  }, 300);
-}
-
-/* OUTCOME */
-function checkOutcome() {
-  if (enemy.hp <= 0) {
-    player.xp += 25;
-    enemy.hp = enemy.maxHp;
-  }
 
   if (player.hp <= 0) {
-    player.hp = player.maxHp;
-    player.stamina = player.maxStamina;
+    alert("💀 Run failed");
+    resetRun();
   }
 }
 
-/* LEVEL */
-function checkLevelUp() {
-  if (player.xp >= player.xpNeeded) {
-    player.level++;
-    player.xp = 0;
-    player.xpNeeded += 50;
-    player.maxHp += 10;
-    player.hp = player.maxHp;
-  }
+function winCombat() {
+  player.xp += 30;
+  enemy.hp = 40;
+  alert("🏆 Victory! (Run continues)");
+  startCombat();
+}
+
+function resetRun() {
+  player.hp = player.maxHp;
+  player.xp = 0;
+  startCombat();
 }
 
 /* UI */
 function updateUI() {
-  document.getElementById("level").innerText = player.level;
   document.getElementById("playerHp").innerText = player.hp;
   document.getElementById("stamina").innerText = player.stamina;
-  document.getElementById("str").innerText = player.str;
-  document.getElementById("end").innerText = player.end;
   document.getElementById("enemyHp").innerText = enemy.hp;
-  document.getElementById("buildName").innerText = player.build;
 
   document.getElementById("xpFill").style.width =
     (player.xp / player.xpNeeded) * 100 + "%";
 
-  document.getElementById("avatar").innerText =
-    player.build === "strength" ? "💪" :
-    player.build === "endurance" ? "🏃" : "🧍";
+  const handDiv = document.getElementById("hand");
+  handDiv.innerHTML = "";
+
+  hand.forEach((key, i) => {
+    const c = cards[key];
+    const card = document.createElement("div");
+    card.className = `card ${c.type}`;
+    card.innerHTML = `
+      <div class="card-title">${c.name}</div>
+      <div class="card-cost">Cost: ${c.cost}</div>
+      <div class="card-text">${c.text}</div>
+    `;
+    card.onclick = () => playCard(i);
+    handDiv.appendChild(card);
+  });
 }
 
 /* INIT */
-loadGame();
-updateUI();
+startCombat();
