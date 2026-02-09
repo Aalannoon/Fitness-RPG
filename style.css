@@ -1,1 +1,48 @@
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(180deg, #0f2027, #203a43, #2c5364);
+  color: #ffffff;
+  text-align: center;
+  padding: 20px;
+  min-height: 100vh;
+}
 
+h1 {
+  margin-bottom: 20px;
+}
+
+.stats {
+  background: rgba(0, 0, 0, 0.35);
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.stats p {
+  margin: 6px 0;
+  font-size: 18px;
+}
+
+button {
+  display: block;
+  width: 90%;
+  max-width: 300px;
+  margin: 10px auto;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  background: #00c853;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:disabled {
+  background: #555;
+  cursor: not-allowed;
+}
