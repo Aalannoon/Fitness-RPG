@@ -1,84 +1,49 @@
 body {
   font-family: Arial, sans-serif;
-  background: radial-gradient(circle at top, #1b2735, #090a0f);
-  color: #ffffff;
+  background: #0b1320;
+  color: #fff;
   text-align: center;
   padding: 20px;
-  min-height: 100vh;
-}
-
-h1 {
-  margin-bottom: 15px;
 }
 
 .panel {
-  background: rgba(0, 0, 0, 0.45);
-  border: 2px solid rgba(255, 255, 255, 0.15);
+  background: #121c2e;
   border-radius: 14px;
   padding: 16px;
   margin: 15px auto;
-  max-width: 380px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+  max-width: 360px;
 }
 
 .panel-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
   color: #00e676;
+  font-weight: bold;
+  margin-bottom: 8px;
 }
 
 .avatar {
-  font-size: 72px;
-  margin-bottom: 10px;
+  font-size: 64px;
 }
 
 .xp-bar {
-  width: 100%;
   background: #333;
-  border-radius: 8px;
+  border-radius: 6px;
   overflow: hidden;
-  margin: 8px 0 12px;
+  margin: 8px 0;
 }
 
 .xp-fill {
-  height: 14px;
+  height: 12px;
+  background: #00e676;
   width: 0%;
-  background: linear-gradient(90deg, #00e676, #00c853);
-}
-
-.stats p,
-.gear p,
-.skills p {
-  margin: 6px 0;
-  font-size: 16px;
-}
-
-input {
-  padding: 8px;
-  width: 120px;
-  border-radius: 6px;
-  border: none;
-  margin-top: 6px;
 }
 
 button {
-  display: block;
   width: 90%;
-  max-width: 300px;
-  margin: 10px auto;
+  max-width: 280px;
+  margin: 6px auto;
   padding: 12px;
-  font-size: 15px;
   border-radius: 10px;
   border: none;
-  background: linear-gradient(180deg, #00e676, #00c853);
-  color: #000;
   font-weight: bold;
-  cursor: pointer;
-}
-
-.skill-btn {
-  background: linear-gradient(180deg, #ffd54f, #ffb300);
+  background: #00e676;
 }
