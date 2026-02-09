@@ -2,57 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>🏋️ Fitness RPG</title>
+  <title>Fitness Roguelike</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
-<h1>🏋️ Fitness RPG</h1>
+<h1>FITNESS ROGUELIKE</h1>
 
 <div class="panel">
-  <div class="panel-title">Build</div>
-  <button onclick="setBuild('strength')">🏋️ Strength</button>
-  <button onclick="setBuild('endurance')">🏃 Endurance</button>
-  <button onclick="setBuild('balanced')">⚖️ Balanced</button>
-  <p>Current: <span id="buildName">Balanced</span></p>
-</div>
-
-<div class="panel">
-  <div class="panel-title">Character</div>
-  <div class="avatar" id="avatar">🧍</div>
-  <p>Level: <span id="level">1</span></p>
+  <div class="row">
+    <div>❤️ HP: <span id="playerHp">100</span></div>
+    <div>🔋 STA: <span id="stamina">3</span></div>
+  </div>
 
   <div class="xp-bar">
     <div class="xp-fill" id="xpFill"></div>
   </div>
-
-  <p>❤️ HP: <span id="playerHp">100</span></p>
-  <p>🔋 Stamina: <span id="stamina">100</span></p>
-  <p>STR: <span id="str">0</span> | END: <span id="end">0</span></p>
 </div>
 
-<div class="panel enemy-panel" id="enemyPanel">
-  <div class="panel-title">Enemy</div>
-  <div class="avatar" id="enemyAvatar">🥊</div>
-  <p id="enemyName">Training Dummy</p>
-  <p>❤️ HP: <span id="enemyHp">80</span></p>
-  <div id="damageText"></div>
+<div class="panel enemy" id="enemyPanel">
+  <div class="enemy-name" id="enemyName">Training Dummy</div>
+  <div>HP: <span id="enemyHp">40</span></div>
 </div>
 
-<div class="panel">
-  <div class="panel-title">Combat</div>
-  <button onclick="playerAction('attack')">⚔️ Attack</button>
-  <button onclick="playerAction('defend')">🛡 Defend</button>
-  <button onclick="playerAction('power')">🔥 Power Move</button>
-</div>
+<div class="hand" id="hand"></div>
+
+<button class="end-turn" onclick="endTurn()">END TURN</button>
 
 <script src="game.js"></script>
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js");
-  }
-</script>
 </body>
 </html>
