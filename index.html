@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Fitness Roguelike</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -12,8 +12,8 @@
 
 <div class="panel">
   <div class="row">
-    <div>❤️ HP: <span id="playerHp">100</span></div>
-    <div>🔋 STA: <span id="stamina">3</span></div>
+    <div>❤️ HP: <span id="playerHp"></span></div>
+    <div>🔋 STA: <span id="stamina"></span></div>
   </div>
 
   <div class="xp-bar">
@@ -21,12 +21,13 @@
   </div>
 </div>
 
-<div class="panel enemy" id="enemyPanel">
-  <div class="enemy-name" id="enemyName">Training Dummy</div>
-  <div>HP: <span id="enemyHp">40</span></div>
+<div class="panel enemy">
+  <div class="enemy-name" id="enemyName"></div>
+  <div>HP: <span id="enemyHp"></span></div>
+  <div class="intent" id="enemyIntent"></div>
 </div>
 
-<div class="hand" id="hand"></div>
+<div id="hand" class="hand"></div>
 
 <button class="end-turn" onclick="endTurn()">END TURN</button>
 
