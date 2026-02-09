@@ -4,7 +4,10 @@ let player = {
   xpNeeded: 100,
   str: 1,
   end: 1,
-  lastWorkout: null
+  gear: {
+    shoes: null,
+    belt: null
+  }
 };
 
 let enemy = {
@@ -27,38 +30,47 @@ function loadGame() {
   }
 }
 
-/* ---------- DAILY LIMIT ---------- */
-function canWorkoutToday() {
-  const today = new Date().toDateString();
-  return player.lastWorkout !== today;
+/* ---------- TOTAL STATS ---------- */
+function totalSTR() {
+  return player.str + (player.gear.belt ? 2 : 0);
+}
+
+function totalEND() {
+  return player.end + (player.gear.shoes ? 2 : 0);
 }
 
 /* ---------- WORKOUT ---------- */
 function logWorkout(type) {
-  if (!canWorkoutToday()) {
-    alert("❌ Workout already logged today.");
-    return;
-  }
-
-  if (type === "strength") player.str += 1;
-  if (type === "cardio") player.end += 1;
+  if (type === "strength") player.str++;
+  if (type === "cardio") player.end++;
 
   player.xp += 20;
-  player.lastWorkout = new Date().toDateString();
-
   checkLevelUp();
+  saveGame();
+  updateUI();
+}
+
+/* ---------- GEAR ---------- */
+function equipShoes() {
+  player.gear.shoes = "Running Shoes";
+  saveGame();
+  updateUI();
+}
+
+function equipBelt() {
+  player.gear.belt = "Lifting Belt";
   saveGame();
   updateUI();
 }
 
 /* ---------- COMBAT ---------- */
 function attackEnemy() {
-  enemy.hp -= player.str;
+  enemy.hp -= totalSTR();
 
   if (enemy.hp <= 0) {
     alert("🧟 Enemy defeated! +30 XP");
-    player.xp += 30;
     enemy.hp = enemy.maxHp;
+    player.xp += 30;
     checkLevelUp();
   }
 
@@ -76,21 +88,35 @@ function checkLevelUp() {
   }
 }
 
+/* ---------- AVATAR ---------- */
+function updateAvatar() {
+  const avatar = document.getElementById("avatar");
+
+  if (player.level < 5) avatar.innerText = "🧍";
+  else if (player.level < 10) avatar.innerText = "🏃";
+  else if (player.level < 15) avatar.innerText = "💪";
+  else avatar.innerText = "🦸";
+}
+
 /* ---------- UI ---------- */
 function updateUI() {
   document.getElementById("level").innerText = player.level;
   document.getElementById("xp").innerText = player.xp;
   document.getElementById("xpNeeded").innerText = player.xpNeeded;
-  document.getElementById("str").innerText = player.str;
-  document.getElementById("end").innerText = player.end;
-  document.getElementById("lastWorkout").innerText =
-    player.lastWorkout ? player.lastWorkout : "None";
+  document.getElementById("str").innerText = totalSTR();
+  document.getElementById("end").innerText = totalEND();
 
-  document.getElementById("enemyName").innerText = enemy.name;
+  document.getElementById("shoes").innerText =
+    player.gear.shoes ? player.gear.shoes : "None";
+  document.getElementById("belt").innerText =
+    player.gear.belt ? player.gear.belt : "None";
+
   document.getElementById("enemyHp").innerText = enemy.hp;
 
-  const xpPercent = (player.xp / player.xpNeeded) * 100;
-  document.getElementById("xpFill").style.width = xpPercent + "%";
+  document.getElementById("xpFill").style.width =
+    (player.xp / player.xpNeeded) * 100 + "%";
+
+  updateAvatar();
 }
 
 /* ---------- INIT ---------- */
