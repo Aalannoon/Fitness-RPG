@@ -4,14 +4,15 @@ let player = {
   xpNeeded: 100,
   str: 1,
   end: 1,
-  gear: {
-    shoes: null,
-    belt: null
+  weight: null,
+  skillPoints: 0,
+  skills: {
+    strMastery: false,
+    endMastery: false
   }
 };
 
 let enemy = {
-  name: "Sloth",
   maxHp: 30,
   hp: 30
 };
@@ -32,11 +33,30 @@ function loadGame() {
 
 /* ---------- TOTAL STATS ---------- */
 function totalSTR() {
-  return player.str + (player.gear.belt ? 2 : 0);
+  let bonus = player.skills.strMastery ? 2 : 0;
+  return player.str + bonus + weightBonus();
 }
 
 function totalEND() {
-  return player.end + (player.gear.shoes ? 2 : 0);
+  let bonus = player.skills.endMastery ? 2 : 0;
+  return player.end + bonus;
+}
+
+function weightBonus() {
+  if (!player.weight) return 0;
+  if (player.weight <= 250) return 2;
+  if (player.weight <= 270) return 1;
+  return 0;
+}
+
+/* ---------- WEIGHT ---------- */
+function logWeight() {
+  const value = document.getElementById("weightInput").value;
+  if (!value) return;
+
+  player.weight = parseInt(value);
+  saveGame();
+  updateUI();
 }
 
 /* ---------- WORKOUT ---------- */
@@ -50,15 +70,19 @@ function logWorkout(type) {
   updateUI();
 }
 
-/* ---------- GEAR ---------- */
-function equipShoes() {
-  player.gear.shoes = "Running Shoes";
+/* ---------- SKILLS ---------- */
+function unlockSTR() {
+  if (player.skillPoints <= 0 || player.skills.strMastery) return;
+  player.skills.strMastery = true;
+  player.skillPoints--;
   saveGame();
   updateUI();
 }
 
-function equipBelt() {
-  player.gear.belt = "Lifting Belt";
+function unlockEND() {
+  if (player.skillPoints <= 0 || player.skills.endMastery) return;
+  player.skills.endMastery = true;
+  player.skillPoints--;
   saveGame();
   updateUI();
 }
@@ -68,7 +92,6 @@ function attackEnemy() {
   enemy.hp -= totalSTR();
 
   if (enemy.hp <= 0) {
-    alert("🧟 Enemy defeated! +30 XP");
     enemy.hp = enemy.maxHp;
     player.xp += 30;
     checkLevelUp();
@@ -84,14 +107,14 @@ function checkLevelUp() {
     player.level++;
     player.xp = 0;
     player.xpNeeded += 50;
-    alert("🎉 LEVEL UP!");
+    player.skillPoints++;
+    alert("🎉 LEVEL UP! +1 Skill Point");
   }
 }
 
 /* ---------- AVATAR ---------- */
 function updateAvatar() {
   const avatar = document.getElementById("avatar");
-
   if (player.level < 5) avatar.innerText = "🧍";
   else if (player.level < 10) avatar.innerText = "🏃";
   else if (player.level < 15) avatar.innerText = "💪";
@@ -105,12 +128,9 @@ function updateUI() {
   document.getElementById("xpNeeded").innerText = player.xpNeeded;
   document.getElementById("str").innerText = totalSTR();
   document.getElementById("end").innerText = totalEND();
-
-  document.getElementById("shoes").innerText =
-    player.gear.shoes ? player.gear.shoes : "None";
-  document.getElementById("belt").innerText =
-    player.gear.belt ? player.gear.belt : "None";
-
+  document.getElementById("weight").innerText =
+    player.weight ? player.weight : "—";
+  document.getElementById("skillPoints").innerText = player.skillPoints;
   document.getElementById("enemyHp").innerText = enemy.hp;
 
   document.getElementById("xpFill").style.width =
