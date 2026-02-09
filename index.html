@@ -1,22 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Fitness RPG</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>🏋️ Fitness RPG</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+    button {
+      padding: 12px 18px;
+      margin: 8px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    .stats {
+      margin: 20px 0;
+      background: #222;
+      padding: 15px;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body>
 
 <h1>🏋️ Fitness RPG</h1>
 
-<div id="character">
+<div class="stats">
   <p>Level: <span id="level">1</span></p>
   <p>XP: <span id="xp">0</span> / <span id="xpNeeded">100</span></p>
   <p>STR: <span id="str">1</span></p>
   <p>END: <span id="end">1</span></p>
+  <p>Last Workout: <span id="lastWorkout">None</span></p>
 </div>
 
-<button onclick="logWorkout('strength')">Lift Weights</button>
-<button onclick="logWorkout('cardio')">Do Cardio</button>
+<button onclick="logWorkout('strength')">🏋️ Lift Weights</button>
+<button onclick="logWorkout('cardio')">🏃 Cardio</button>
 
 <script src="game.js"></script>
 </body>
