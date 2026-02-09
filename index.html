@@ -13,6 +13,9 @@
 <!-- CHARACTER PANEL -->
 <div class="panel stats">
   <div class="panel-title">Character</div>
+
+  <div class="avatar" id="avatar">🧍</div>
+
   <p>Level: <span id="level">1</span></p>
 
   <div class="xp-bar">
@@ -22,7 +25,6 @@
   <p>XP: <span id="xp">0</span> / <span id="xpNeeded">100</span></p>
   <p>STR: <span id="str">1</span></p>
   <p>END: <span id="end">1</span></p>
-  <p>Last Workout: <span id="lastWorkout">None</span></p>
 </div>
 
 <!-- ACTION PANEL -->
@@ -30,6 +32,15 @@
   <div class="panel-title">Actions</div>
   <button onclick="logWorkout('strength')">🏋️ Lift Weights</button>
   <button onclick="logWorkout('cardio')">🏃 Cardio</button>
+</div>
+
+<!-- GEAR PANEL -->
+<div class="panel gear">
+  <div class="panel-title">Equipment</div>
+  <p>👟 Shoes: <span id="shoes">None</span></p>
+  <p>🦾 Belt: <span id="belt">None</span></p>
+  <button onclick="equipShoes()">Equip Running Shoes</button>
+  <button onclick="equipBelt()">Equip Lifting Belt</button>
 </div>
 
 <!-- ENEMY PANEL -->
