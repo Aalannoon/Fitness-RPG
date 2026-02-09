@@ -12,6 +12,14 @@
 <h1>🏋️ Fitness RPG</h1>
 
 <div class="panel">
+  <div class="panel-title">Build</div>
+  <button onclick="setBuild('strength')">🏋️ Strength</button>
+  <button onclick="setBuild('endurance')">🏃 Endurance</button>
+  <button onclick="setBuild('balanced')">⚖️ Balanced</button>
+  <p>Current: <span id="buildName">Balanced</span></p>
+</div>
+
+<div class="panel">
   <div class="panel-title">Character</div>
   <div class="avatar" id="avatar">🧍</div>
   <p>Level: <span id="level">1</span></p>
@@ -22,14 +30,15 @@
 
   <p>❤️ HP: <span id="playerHp">100</span></p>
   <p>🔋 Stamina: <span id="stamina">100</span></p>
-  <p>STR: <span id="str">1</span> | END: <span id="end">1</span></p>
+  <p>STR: <span id="str">0</span> | END: <span id="end">0</span></p>
 </div>
 
-<div class="panel">
+<div class="panel enemy-panel" id="enemyPanel">
   <div class="panel-title">Enemy</div>
-  <div class="avatar" id="enemyAvatar">❓</div>
-  <p id="enemyName">—</p>
-  <p>❤️ HP: <span id="enemyHp">0</span></p>
+  <div class="avatar" id="enemyAvatar">🥊</div>
+  <p id="enemyName">Training Dummy</p>
+  <p>❤️ HP: <span id="enemyHp">80</span></p>
+  <div id="damageText"></div>
 </div>
 
 <div class="panel">
